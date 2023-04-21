@@ -72,8 +72,8 @@ void handle_read_comp(int num_args, char *args[], complex **complex_pointers) {
 complex **get_complex(char *var_name, complex **complex_pointers) {
     char *complex_names[] = {"A", "B", "C", "D", "E", "F"};
     int num_complex = sizeof(complex_names) / sizeof(complex_names[0]);
-
-    for (int i = 0; i < num_complex; i++) {
+    int i;
+    for (i = 0; i < num_complex; i++) {
         if (strcmp(var_name, complex_names[i]) == 0) {
             return &complex_pointers[i];
         }
@@ -90,8 +90,8 @@ complex **get_complex(char *var_name, complex **complex_pointers) {
 int is_complex(char *var_name) {
     char *complex_names[] = {"A", "B", "C", "D", "E", "F"};
     int num_complex = sizeof(complex_names) / sizeof(complex_names[0]);
-
-    for (int i = 0; i < num_complex; i++) {
+    int i;
+    for (i = 0; i < num_complex; i++) {
         if (strcmp(var_name, complex_names[i]) == 0) {
             return 1;
         }
