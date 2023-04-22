@@ -81,11 +81,9 @@ void parse_user_input(char *str, complex **complex_pointers) {
 }
 
 
-
-
 int validate_string(char *str) {
     int i = 0;
-    int letter_count = 0, comma_count = 0, dot_count = 0;
+    int letter_count = 0, comma_count = 0;
 
     if (!str) {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
@@ -118,20 +116,8 @@ int validate_string(char *str) {
     i = ignore_whitespaces(str, i);
 
     // check for first number
-    if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
-        while (isdigit(str[i]) || str[i] == '.' || str[i] == '-') {
-            if (str[i] == '.') {
-                dot_count++;
-            }
-            i++;
-        }
-
-        // check for invalid first number
-        if (dot_count > 1) {
-            HANDLE_ERROR(ERR_INVALID_PARAMETER);
-        }
-    } else {
-        HANDLE_ERROR(ERR_INVALID_PARAMETER);
+    if (!check_number(str, &i)) {
+        return 0;
     }
 
     i = ignore_whitespaces(str, i);
@@ -139,7 +125,6 @@ int validate_string(char *str) {
     // check for comma after first number
     if (str[i] == ',') {
         comma_count++;
-        dot_count = 0;
         i++;
     } else {
         HANDLE_ERROR(ERR_MISSING_COMMA);
@@ -148,20 +133,8 @@ int validate_string(char *str) {
     i = ignore_whitespaces(str, i);
 
     // check for second number
-    if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
-        while (isdigit(str[i]) || str[i] == '.' || str[i] == '-') {
-            if (str[i] == '.') {
-                dot_count++;
-            }
-            i++;
-        }
-
-        // check for invalid second number
-        if (dot_count > 1) {
-            HANDLE_ERROR(ERR_INVALID_PARAMETER);
-        }
-    } else {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+    if (!check_number(str, &i)) {
+        return 0;
     }
 
     i = ignore_whitespaces(str, i);
@@ -188,10 +161,11 @@ int validate_string(char *str) {
     return 1;
 }
 
+
 void handle_read_comp(char *args[], complex **complex_pointers) {
     if (validate_string(*args)) {
-        char *letter = strtok(*args, " ,");
         double real, imag;
+        char *letter = strtok(*args, " ,");
         parse_double(strtok(NULL, " ,"), &real);
         parse_double(strtok(NULL, " ,"), &imag);
 

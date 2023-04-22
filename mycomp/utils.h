@@ -16,4 +16,6 @@ int parse_double(char *str, double *num);
 
 int ignore_whitespaces(char *str, int i);
 
+int check_number(char *str, int *i);
+
 #endif //UTILS_H

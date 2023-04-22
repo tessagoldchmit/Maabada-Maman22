@@ -57,3 +57,35 @@ int ignore_whitespaces(char *str, int i) {
     }
     return i;
 }
+
+/**
+ * Checks if the string starting at the index pointed to by i represents a valid number.
+ * A valid number can contain digits, a decimal point (at most once), and an optional sign (+/-).
+ *
+ * Parameters:
+ * str (char*): A pointer to the string to validate.
+ * i (int*): A pointer to an integer representing the index at which to start the validation.
+ *
+ * Returns:
+ * int: 1 if the string represents a valid number, 0 otherwise.
+ */
+int check_number(char *str, int *i) {
+    int dot_count = 0;
+
+    if (!isdigit(str[*i]) && str[*i] != '-' && str[*i] != '+') {
+        HANDLE_ERROR(ERR_INVALID_PARAMETER);
+    }
+
+    while (isdigit(str[*i]) || str[*i] == '.' || str[*i] == '-') {
+        if (str[*i] == '.') {
+            dot_count++;
+        }
+        (*i)++;
+    }
+
+    if (dot_count > 1) {
+        HANDLE_ERROR(ERR_INVALID_PARAMETER);
+    }
+
+    return 1;
+}
