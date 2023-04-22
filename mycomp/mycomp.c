@@ -49,6 +49,16 @@ int main() {
     parse_user_input(str6, complex_pointers);
     printf("\n");
 
+    char str7[] = "read_comp, A, 2, 3";
+    printf("%s\n", str7);
+    parse_user_input(str7, complex_pointers);
+    printf("\n");
+
+    char str8[] = "read_comp A, 2, 3 aa";
+    printf("%s\n", str8);
+    parse_user_input(str8, complex_pointers);
+    printf("\n");
+
     return 0;
 }
 
@@ -71,15 +81,14 @@ void parse_user_input(char *str, complex **complex_pointers) {
 }
 
 
+
+
 int validate_string(char *str) {
     int i = 0;
     int letter_count = 0, comma_count = 0, dot_count = 0;
 
     while (str[i]) {
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
-
+        i = ignore_whitespaces(str, i);
 
         // check for A-F letter
         if (isalpha(str[i])) {
@@ -95,9 +104,7 @@ int validate_string(char *str) {
         }
         i++;
 
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
+        i = ignore_whitespaces(str, i);
 
         // check for comma after letter
         if (str[i] == ',') {
@@ -108,9 +115,7 @@ int validate_string(char *str) {
             return 0;
         }
 
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
+        i = ignore_whitespaces(str, i);
 
         // check for first number
         if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
@@ -131,9 +136,7 @@ int validate_string(char *str) {
             return 0;
         }
 
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
+        i = ignore_whitespaces(str, i);
 
         // check for comma after first number
         if (str[i] == ',') {
@@ -145,9 +148,7 @@ int validate_string(char *str) {
             return 0;
         }
 
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
+        i = ignore_whitespaces(str, i);
 
         // check for second number
         if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
@@ -168,9 +169,7 @@ int validate_string(char *str) {
             return 0;
         }
 
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
+        i = ignore_whitespaces(str, i);
 
         // check for illegal comma
         if (str[i] == ',') {
@@ -178,9 +177,7 @@ int validate_string(char *str) {
             return 0;
         }
 
-        // ignore spaces
-        while (isspace(str[i]))
-            i++;
+        i = ignore_whitespaces(str, i);
 
         // check for extraneous text after end of command
         if (str[i]) {

@@ -5,14 +5,8 @@
 
 complex **get_complex(char *var_name, complex **complex_pointers);
 
-int is_complex(char *var_name);
-
 int parse_double(char *str, double *num);
 
-int count_args(char args[]);
-
-void remove_spaces(char *string);
-
-int count_commas(char *str);
+int ignore_whitespaces(char *str, int i);
 
 #endif //UTILS_H
