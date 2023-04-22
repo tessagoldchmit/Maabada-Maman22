@@ -23,7 +23,6 @@ int main() {
     parse_user_input(str1, complex_pointers);
     printf("\n");*/
 
-
     char str2[] = "read_comp D, a, 3";
     printf("%s\n", str2);
     parse_user_input(str2, complex_pointers);
@@ -54,7 +53,8 @@ int main() {
     parse_user_input(str7, complex_pointers);
     printf("\n");
 
-    char str8[] = "read_comp A, 2, 3 aa";
+
+    char str8[] = "read_comp";
     printf("%s\n", str8);
     parse_user_input(str8, complex_pointers);
     printf("\n");
@@ -87,103 +87,106 @@ int validate_string(char *str) {
     int i = 0;
     int letter_count = 0, comma_count = 0, dot_count = 0;
 
-    while (str[i]) {
-        i = ignore_whitespaces(str, i);
+    if (!str) {
+        printf(ERR_MISSING_PARAMETER);
+        return 0;
+    }
 
-        // check for A-F letter
-        if (isalpha(str[i])) {
-            char letter = str[i];
-            if (letter < 'A' || letter > 'F') {
-                printf(ERR_UNDEFINED_COMPLEX_VAR);
-                return 0;
-            }
-            letter_count++;
-        } else {
-            printf(ERR_MISSING_PARAMETER);
+    i = ignore_whitespaces(str, i);
+
+    // check for A-F letter
+    if (isalpha(str[i])) {
+        char letter = str[i];
+        if (letter < 'A' || letter > 'F') {
+            printf(ERR_UNDEFINED_COMPLEX_VAR);
             return 0;
         }
+        letter_count++;
+    } else {
+        printf(ERR_MISSING_PARAMETER);
+        return 0;
+    }
+    i++;
+
+    i = ignore_whitespaces(str, i);
+
+    // check for comma after letter
+    if (str[i] == ',') {
+        comma_count++;
         i++;
+    } else {
+        printf(ERR_MISSING_COMMA);
+        return 0;
+    }
 
-        i = ignore_whitespaces(str, i);
+    i = ignore_whitespaces(str, i);
 
-        // check for comma after letter
-        if (str[i] == ',') {
-            comma_count++;
+    // check for first number
+    if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
+        while (isdigit(str[i]) || str[i] == '.' || str[i] == '-') {
+            if (str[i] == '.') {
+                dot_count++;
+            }
             i++;
-        } else {
-            printf(ERR_MISSING_COMMA);
-            return 0;
         }
 
-        i = ignore_whitespaces(str, i);
-
-        // check for first number
-        if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
-            while (isdigit(str[i]) || str[i] == '.' || str[i] == '-') {
-                if (str[i] == '.') {
-                    dot_count++;
-                }
-                i++;
-            }
-
-            // check for invalid first number
-            if (dot_count > 1) {
-                printf(ERR_INVALID_PARAMETER);
-                return 0;
-            }
-        } else {
+        // check for invalid first number
+        if (dot_count > 1) {
             printf(ERR_INVALID_PARAMETER);
             return 0;
         }
+    } else {
+        printf(ERR_INVALID_PARAMETER);
+        return 0;
+    }
 
-        i = ignore_whitespaces(str, i);
+    i = ignore_whitespaces(str, i);
 
-        // check for comma after first number
-        if (str[i] == ',') {
-            comma_count++;
-            dot_count = 0;
+    // check for comma after first number
+    if (str[i] == ',') {
+        comma_count++;
+        dot_count = 0;
+        i++;
+    } else {
+        printf(ERR_MISSING_COMMA);
+        return 0;
+    }
+
+    i = ignore_whitespaces(str, i);
+
+    // check for second number
+    if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
+        while (isdigit(str[i]) || str[i] == '.' || str[i] == '-') {
+            if (str[i] == '.') {
+                dot_count++;
+            }
             i++;
-        } else {
-            printf(ERR_MISSING_COMMA);
-            return 0;
         }
 
-        i = ignore_whitespaces(str, i);
-
-        // check for second number
-        if (isdigit(str[i]) || str[i] == '-' || str[i] == '+') {
-            while (isdigit(str[i]) || str[i] == '.' || str[i] == '-') {
-                if (str[i] == '.') {
-                    dot_count++;
-                }
-                i++;
-            }
-
-            // check for invalid second number
-            if (dot_count > 1) {
-                printf(ERR_INVALID_PARAMETER);
-                return 0;
-            }
-        } else {
-            printf(ERR_MISSING_PARAMETER);
+        // check for invalid second number
+        if (dot_count > 1) {
+            printf(ERR_INVALID_PARAMETER);
             return 0;
         }
+    } else {
+        printf(ERR_MISSING_PARAMETER);
+        return 0;
+    }
 
-        i = ignore_whitespaces(str, i);
+    i = ignore_whitespaces(str, i);
 
-        // check for illegal comma
-        if (str[i] == ',') {
-            printf(ERR_ILLEGAL_COMMA);
-            return 0;
-        }
+    // check for illegal comma
+    if (str[i] == ',') {
+        printf(ERR_ILLEGAL_COMMA);
+        return 0;
+    }
 
-        i = ignore_whitespaces(str, i);
+    i = ignore_whitespaces(str, i);
 
-        // check for extraneous text after end of command
-        if (str[i]) {
-            printf(ERR_EXTRANEOUS_TEXT);
-            return 0;
-        }
+    // check for extraneous text after end of command
+    if (str[i]) {
+        printf(ERR_EXTRANEOUS_TEXT);
+        return 0;
     }
 
     // check for missing parameter or multiple consecutive commas
