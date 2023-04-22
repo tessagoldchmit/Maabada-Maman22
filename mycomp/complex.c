@@ -103,7 +103,7 @@ void mult_comp_comp(complex z1, complex z2) {
  */
 void abs_comp(complex z) {
     double abs = sqrt(z.real * z.real + z.imag * z.imag);
-    printf("%f", abs);
+    printf("%.2f\n", abs);
 
 }
 

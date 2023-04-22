@@ -7,16 +7,25 @@
 void parse_user_input(char *str, complex **complex_pointers);
 
 void handle_read_comp(char *args[], complex **complex_pointers);
+
 void handle_print_comp(char *args[], complex **complex_pointers);
+
 void handle_add_comp(char *args[], complex **complex_pointers);
+
 void handle_sub_comp(char *args[], complex **complex_pointers);
+
 void handle_mult_comp_real(char *args[], complex **complex_pointers);
+
 void handle_mult_comp_img(char *args[], complex **complex_pointers);
+
 void handle_mult_comp_comp(char *args[], complex **complex_pointers);
+
 void handle_abs_comp(char *args[], complex **complex_pointers);
+
 void handle_stop(char *args[]);
 
 int main() {
+    int i;
     complex A = {0, 0};
     complex B = {0, 0};
     complex C = {0, 0};
@@ -25,53 +34,43 @@ int main() {
     complex F = {0, 0};
     complex *complex_pointers[] = {&A, &B, &C, &D, &E, &F};
 
-    char str1[] = "read_comp A, 2.4, 3.2";
-    printf("%s\n", str1);
-    parse_user_input(str1, complex_pointers);
-    printf("\n");
+    char *strs[] = {"print_comp A",
+                    "print_comp B",
+                    "print_comp C",
+                    "read_comp A, 45.1, -23.75",
+                    "print_comp A",
+                    "read_comp B, 54.2, 3.56",
+                    "print_comp B",
+                    "read_comp C, 0, -1",
+                    "print_comp C",
+                    "add_comp A, B",
+                    "sub_comp C, A",
+                    "sub_comp B, B",
+                    "sub_comp D, A",
+                    "mult_comp_real A, 2.51",
+                    "mult_comp_img A, -2.564",
+                    "mult_comp_comp A, B",
+                    "mult_comp_comp E, C",
+                    "abs_comp A",
+                    "abs_comp B",
+                    "abs_comp C",
+                    "abs_comp F"
+    };
 
-    char str2[] = "read_comp D, a, 3";
-    printf("%s\n", str2);
-    parse_user_input(str2, complex_pointers);
-    printf("\n");
+    int num_strs = sizeof(strs) / sizeof(char *);
 
-    char str3[] = "read_comp A, 2";
-    printf("%s\n", str3);
-    parse_user_input(str3, complex_pointers);
-    printf("\n");
-
-    char str4[] = "read_comp A, 2 3";
-    printf("%s\n", str4);
-    parse_user_input(str4, complex_pointers);
-    printf("\n");
-
-    char str5[] = "read_comp A 2, 3";
-    printf("%s\n", str5);
-    parse_user_input(str5, complex_pointers);
-    printf("\n");
-
-    char str6[] = "read_comp G, 2, 3";
-    printf("%s\n", str6);
-    parse_user_input(str6, complex_pointers);
-    printf("\n");
-
-    char str7[] = "read_comp, A, 2, 3";
-    printf("%s\n", str7);
-    parse_user_input(str7, complex_pointers);
-    printf("\n");
-
-
-    char str8[] = "read_comp";
-    printf("%s\n", str8);
-    parse_user_input(str8, complex_pointers);
-    printf("\n");
+    for (i = 0; i < num_strs; i++) {
+        printf("%s\n", strs[i]);
+        parse_user_input(strs[i], complex_pointers);
+        printf("\n");
+    }
 
     return 0;
 }
 
-
 void parse_user_input(char *str, complex **complex_pointers) {
-    char *p = strtok(str, " \n\t\v\f");
+    char *copy = strdup(str);
+    char *p = strtok(copy, " \n\t\v\f");
     char *command = p;
     char *args = strtok(NULL, "");
 
@@ -364,7 +363,6 @@ int validate_string_letter_double(char *str) {
 }
 
 
-
 /**
  * Validates an empty string
  *
@@ -373,7 +371,7 @@ int validate_string_letter_double(char *str) {
  * @return Returns 1 if the string is empty, otherwise 0.
  */
 int validate_empty(char *str) {
-    if (strlen(str)==0) {
+    if (strlen(str) == 0) {
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
     }
     return 1;
