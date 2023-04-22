@@ -1,7 +1,5 @@
 #include "complex.h"
 #include "utils.h"
-#include <stdio.h>
-#include <string.h>
 #include <ctype.h>
 
 void parse_user_input(char *str, complex **complex_pointers);
@@ -25,7 +23,6 @@ void handle_abs_comp(char *args[], complex **complex_pointers);
 void handle_stop(char *args[]);
 
 int main() {
-    int i;
     complex A = {0, 0};
     complex B = {0, 0};
     complex C = {0, 0};
@@ -34,34 +31,19 @@ int main() {
     complex F = {0, 0};
     complex *complex_pointers[] = {&A, &B, &C, &D, &E, &F};
 
-    char *strs[] = {"print_comp A",
-                    "print_comp B",
-                    "print_comp C",
-                    "read_comp A, 45.1, -23.75",
-                    "print_comp A",
-                    "read_comp B, 54.2, 3.56",
-                    "print_comp B",
-                    "read_comp C, 0, -1",
-                    "print_comp C",
-                    "add_comp A, B",
-                    "sub_comp C, A",
-                    "sub_comp B, B",
-                    "sub_comp D, A",
-                    "mult_comp_real A, 2.51",
-                    "mult_comp_img A, -2.564",
-                    "mult_comp_comp A, B",
-                    "mult_comp_comp E, C",
-                    "abs_comp A",
-                    "abs_comp B",
-                    "abs_comp C",
-                    "abs_comp F"
-    };
+    char input[100];
 
-    int num_strs = sizeof(strs) / sizeof(char *);
+    while (1) {
+        printf("> ");
+        if (!fgets(input, sizeof(input), stdin)) {
+            break;  // End of file or error occurred
+        }
 
-    for (i = 0; i < num_strs; i++) {
-        printf("%s\n", strs[i]);
-        parse_user_input(strs[i], complex_pointers);
+        // Trim trailing newline character
+        input[strcspn(input, "\n")] = 0;
+
+        printf("> %s\n", input);
+        parse_user_input(input, complex_pointers);
         printf("\n");
     }
 
@@ -78,6 +60,12 @@ void parse_user_input(char *str, complex **complex_pointers) {
         printf(ERR_EMPTY_COMMAND);
         return;
     }
+
+    if (command[strlen(command) - 1] == ',') {
+        printf(ERR_ILLEGAL_COMMA);
+        return;
+    }
+
     if (strcmp(command, "read_comp") == 0) {
         handle_read_comp(&args, complex_pointers);
     } else if (strcmp(command, "print_comp") == 0) {
@@ -126,6 +114,8 @@ int validate_string_letter_double_double(char *str) {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
         letter_count++;
+    } else if (validate_comma(str, &i)) {
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
@@ -207,7 +197,7 @@ int validate_string_letter(char *str) {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
     } else {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
     i++;
 
@@ -244,6 +234,8 @@ int validate_string_letter_letter(char *str) {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
         letter_count++;
+    } else if (validate_comma(str, &i)) {
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
@@ -266,6 +258,8 @@ int validate_string_letter_letter(char *str) {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
         letter_count++;
+    } else if (validate_comma(str, &i)) {
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
@@ -319,6 +313,8 @@ int validate_string_letter_double(char *str) {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
         letter_count++;
+    } else if (validate_comma(str, &i)) {
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
@@ -370,8 +366,8 @@ int validate_string_letter_double(char *str) {
  *
  * @return Returns 1 if the string is empty, otherwise 0.
  */
-int validate_empty(char *str) {
-    if (strlen(str) == 0) {
+int validate_empty(const char *str) {
+    if (str != NULL) {
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
     }
     return 1;
