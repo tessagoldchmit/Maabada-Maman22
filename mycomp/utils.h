@@ -3,6 +3,13 @@
 
 #include "complex.h"
 
+#define HANDLE_ERROR(msg) \
+    do { \
+        printf(msg); \
+        return 0; \
+    } while (0)
+
+
 complex **get_complex(char *var_name, complex **complex_pointers);
 
 int parse_double(char *str, double *num);

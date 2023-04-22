@@ -88,8 +88,7 @@ int validate_string(char *str) {
     int letter_count = 0, comma_count = 0, dot_count = 0;
 
     if (!str) {
-        printf(ERR_MISSING_PARAMETER);
-        return 0;
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
@@ -98,13 +97,11 @@ int validate_string(char *str) {
     if (isalpha(str[i])) {
         char letter = str[i];
         if (letter < 'A' || letter > 'F') {
-            printf(ERR_UNDEFINED_COMPLEX_VAR);
-            return 0;
+            HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
         letter_count++;
     } else {
-        printf(ERR_MISSING_PARAMETER);
-        return 0;
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
     i++;
 
@@ -115,8 +112,7 @@ int validate_string(char *str) {
         comma_count++;
         i++;
     } else {
-        printf(ERR_MISSING_COMMA);
-        return 0;
+        HANDLE_ERROR(ERR_MISSING_COMMA);
     }
 
     i = ignore_whitespaces(str, i);
@@ -132,12 +128,10 @@ int validate_string(char *str) {
 
         // check for invalid first number
         if (dot_count > 1) {
-            printf(ERR_INVALID_PARAMETER);
-            return 0;
+            HANDLE_ERROR(ERR_INVALID_PARAMETER);
         }
     } else {
-        printf(ERR_INVALID_PARAMETER);
-        return 0;
+        HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
@@ -148,8 +142,7 @@ int validate_string(char *str) {
         dot_count = 0;
         i++;
     } else {
-        printf(ERR_MISSING_COMMA);
-        return 0;
+        HANDLE_ERROR(ERR_MISSING_COMMA);
     }
 
     i = ignore_whitespaces(str, i);
@@ -165,37 +158,31 @@ int validate_string(char *str) {
 
         // check for invalid second number
         if (dot_count > 1) {
-            printf(ERR_INVALID_PARAMETER);
-            return 0;
+            HANDLE_ERROR(ERR_INVALID_PARAMETER);
         }
     } else {
-        printf(ERR_MISSING_PARAMETER);
-        return 0;
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
 
     // check for illegal comma
     if (str[i] == ',') {
-        printf(ERR_ILLEGAL_COMMA);
-        return 0;
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA);
     }
 
     i = ignore_whitespaces(str, i);
 
     // check for extraneous text after end of command
     if (str[i]) {
-        printf(ERR_EXTRANEOUS_TEXT);
-        return 0;
+        HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
     }
 
     // check for missing parameter or multiple consecutive commas
     if (letter_count == 0 || comma_count < 2) {
-        printf(ERR_MISSING_PARAMETER);
-        return 0;
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
     } else if (comma_count > 2) {
-        printf(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
-        return 0;
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     }
 
     return 1;
