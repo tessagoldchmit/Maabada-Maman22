@@ -17,14 +17,23 @@ typedef struct {
 
 /* function declarations */
 void read_comp(complex *z, double real_part, double imag_part);
-/*void print_comp(complex z);
-complex add_comp(complex z1, complex z2);
-complex sub_comp(complex z1, complex z2);
-complex mult_comp_real(complex z, double m);
-complex mult_comp_img(complex z, double m);
-complex mult_comp_comp(complex z1, complex z2);
-double abs_comp(complex z);
-void stop(void);*/
+
+void print_comp(complex z);
+
+void add_comp(complex z1, complex z2);
+
+void sub_comp(complex z1, complex z2);
+
+void mult_comp_real(complex z, double m);
+
+void mult_comp_img(complex z, double m);
+
+void mult_comp_comp(complex z1, complex z2);
+
+void abs_comp(complex z);
+
+void stop(void);
+
 
 /* Error messages */
 #define ERR_EMPTY_COMMAND "Error: empty command\n"

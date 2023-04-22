@@ -29,13 +29,12 @@ void print_comp(complex z) {
  *
  * @param  z1 The first complex number to be added.
  * @param  z2 The second complex number to be added.
- * @return The sum of the two complex numbers.
  */
-complex add_comp(complex z1, complex z2) {
+void add_comp(complex z1, complex z2) {
     complex result;
     result.real = z1.real + z2.real;
     result.imag = z1.imag + z2.imag;
-    return result;
+    print_comp(result);
 }
 
 
@@ -44,13 +43,12 @@ complex add_comp(complex z1, complex z2) {
  *
  * @param  z1 The complex number from which to subtract.
  * @param  z2 The complex number to subtract.
- * @return The result of subtracting one complex number from another.
  */
-complex sub_comp(complex z1, complex z2) {
+void sub_comp(complex z1, complex z2) {
     complex result;
     result.real = z1.real - z2.real;
     result.imag = z1.imag - z2.imag;
-    return result;
+    print_comp(result);
 }
 
 
@@ -59,13 +57,12 @@ complex sub_comp(complex z1, complex z2) {
  *
  * @param  z The complex number to be multiplied.
  * @param  m The real number by which to multiply the complex number.
- * @return The result of multiplying a complex number by a real number.
  */
-complex mult_comp_real(complex z, double m) {
+void mult_comp_real(complex z, double m) {
     complex result;
     result.real = z.real * m;
     result.imag = z.imag * m;
-    return result;
+    print_comp(result);
 }
 
 
@@ -76,11 +73,11 @@ complex mult_comp_real(complex z, double m) {
  * @param  m The pure imaginary number by which to multiply the complex number.
  * @return The result of multiplying a complex number by a pure imaginary number.
  */
-complex mult_comp_img(complex z, double m) {
+void mult_comp_img(complex z, double m) {
     complex result;
     result.real = -m * z.imag;
     result.imag = m * z.real;
-    return result;
+    print_comp(result);
 }
 
 
@@ -89,13 +86,12 @@ complex mult_comp_img(complex z, double m) {
  *
  * @param  z1 The first complex number to be multiplied.
  * @param  z2 The second complex number to be multiplied.
- * @return The product of two complex numbers
  */
-complex mult_comp_comp(complex z1, complex z2) {
+void mult_comp_comp(complex z1, complex z2) {
     complex result;
     result.real = z1.real * z2.real - z1.imag * z2.imag;
     result.imag = z1.real * z2.imag + z1.imag * z2.real;
-    return result;
+    print_comp(result);
 }
 
 
@@ -105,8 +101,10 @@ complex mult_comp_comp(complex z1, complex z2) {
  * @param  z The complex number for which to calculate the absolute value.
  * @return The absolute value of a complex number.
  */
-double abs_comp(complex z) {
-    return sqrt(z.real * z.real + z.imag * z.imag);
+void abs_comp(complex z) {
+    double abs = sqrt(z.real * z.real + z.imag * z.imag);
+    printf("%f", abs);
+
 }
 
 
