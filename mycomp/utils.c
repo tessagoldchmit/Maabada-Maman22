@@ -73,7 +73,7 @@ int check_number(char *str, int *i) {
     int dot_count = 0;
 
     if (!isdigit(str[*i]) && str[*i] != '-' && str[*i] != '+') {
-        HANDLE_ERROR(ERR_INVALID_PARAMETER);
+        return 0;
     }
 
     while (isdigit(str[*i]) || str[*i] == '.' || str[*i] == '-') {
@@ -84,8 +84,24 @@ int check_number(char *str, int *i) {
     }
 
     if (dot_count > 1) {
-        HANDLE_ERROR(ERR_INVALID_PARAMETER);
+        return 0;
     }
 
     return 1;
+}
+
+/**
+ * Validates the presence of a comma at the current position in the string.
+ *
+ * @param str the string to validate
+ * @param i a pointer to the current position in the string
+ * @return 1 if a comma is present, 0 otherwise
+ */
+int validate_comma(char *str, int *i) {
+    if (str[*i] == ',') {
+        (*i)++;
+        return 1;
+    } else {
+        return 0;
+    }
 }

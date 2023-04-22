@@ -106,35 +106,31 @@ int validate_string(char *str) {
     i = ignore_whitespaces(str, i);
 
     // check for comma after letter
-    if (str[i] == ',') {
-        comma_count++;
-        i++;
-    } else {
+    if (!validate_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
+    comma_count++;
 
     i = ignore_whitespaces(str, i);
 
     // check for first number
     if (!check_number(str, &i)) {
-        return 0;
+        HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
 
     // check for comma after first number
-    if (str[i] == ',') {
-        comma_count++;
-        i++;
-    } else {
+    if (!validate_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
+    comma_count++;
 
     i = ignore_whitespaces(str, i);
 
     // check for second number
     if (!check_number(str, &i)) {
-        return 0;
+        HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
@@ -160,7 +156,6 @@ int validate_string(char *str) {
 
     return 1;
 }
-
 
 void handle_read_comp(char *args[], complex **complex_pointers) {
     if (validate_string(*args)) {
