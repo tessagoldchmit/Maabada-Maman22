@@ -36,10 +36,10 @@ int main() {
     while (1) {
         printf("> ");
         if (!fgets(input, sizeof(input), stdin)) {
-            break;  // End of file or error occurred
+            break;  /* End of file or error occurred */
         }
 
-        // Trim trailing newline character
+        /* Trim trailing newline character */
         input[strcspn(input, "\n")] = 0;
 
         printf("> %s\n", input);
@@ -107,7 +107,7 @@ int validate_string_letter_double_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for A-F letter
+    /* check for A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
         if (letter < 'A' || letter > 'F') {
@@ -123,7 +123,7 @@ int validate_string_letter_double_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for comma after letter
+    /* check for comma after letter */
     if (!validate_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
@@ -131,14 +131,14 @@ int validate_string_letter_double_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for first number
+    /* check for first number */
     if (!check_number(str, &i)) {
         HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
 
-    // check for comma after first number
+    /* check for comma after first number */
     if (!validate_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
@@ -146,25 +146,25 @@ int validate_string_letter_double_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for second number
+    /* check for second number */
     if (!check_number(str, &i)) {
         HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
 
-    // check for illegal comma
+    /* check for illegal comma */
     if (str[i] == ',') {
         HANDLE_ERROR(ERR_ILLEGAL_COMMA);
     }
 
     i = ignore_whitespaces(str, i);
 
-    // check for extraneous text after end of command
+    /* check for extraneous text after end of command */
     if (str[i])
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
 
-    // check for missing parameter or multiple consecutive commas
+    /* check for missing parameter or multiple consecutive commas */
     if (letter_count == 0 || comma_count < 2) {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     } else if (comma_count > 2) {
@@ -190,7 +190,7 @@ int validate_string_letter(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for A-F letter
+    /* check for A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
         if (letter < 'A' || letter > 'F') {
@@ -203,7 +203,7 @@ int validate_string_letter(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for extraneous text after end of command
+    /* check for extraneous text after end of command */
     if (str[i])
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
 
@@ -227,7 +227,7 @@ int validate_string_letter_letter(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for first A-F letter
+    /* check for first A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
         if (letter < 'A' || letter > 'F') {
@@ -243,7 +243,7 @@ int validate_string_letter_letter(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for comma after first letter
+    /* check for comma after first letter */
     if (!validate_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
@@ -251,7 +251,7 @@ int validate_string_letter_letter(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for second A-F letter
+    /* check for second A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
         if (letter < 'A' || letter > 'F') {
@@ -267,18 +267,18 @@ int validate_string_letter_letter(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for illegal comma
+    /* check for illegal comma */
     if (str[i] == ',') {
         HANDLE_ERROR(ERR_ILLEGAL_COMMA);
     }
 
     i = ignore_whitespaces(str, i);
 
-    // check for extraneous text after end of command
+    /* check for extraneous text after end of command */
     if (str[i])
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
 
-    // check for missing parameter or multiple consecutive commas
+    /* check for missing parameter or multiple consecutive commas */
     if (letter_count < 2 || comma_count < 1) {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     } else if (comma_count > 1) {
@@ -306,7 +306,7 @@ int validate_string_letter_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for A-F letter
+    /* check for A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
         if (letter < 'A' || letter > 'F') {
@@ -322,7 +322,7 @@ int validate_string_letter_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for comma after letter
+    /* check for comma after letter */
     if (!validate_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
@@ -330,25 +330,25 @@ int validate_string_letter_double(char *str) {
 
     i = ignore_whitespaces(str, i);
 
-    // check for number after comma
+    /* check for number after comma */
     if (!check_number(str, &i)) {
         HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
     i = ignore_whitespaces(str, i);
 
-    // check for illegal comma
+    /* check for illegal comma */
     if (str[i] == ',') {
         HANDLE_ERROR(ERR_ILLEGAL_COMMA);
     }
 
     i = ignore_whitespaces(str, i);
 
-    // check for extraneous text after end of command
+    /* check for extraneous text after end of command */
     if (str[i])
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
 
-    // check for missing parameter or multiple consecutive commas
+    /* check for missing parameter or multiple consecutive commas */
     if (letter_count == 0 || comma_count == 0) {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     } else if (comma_count > 1) {

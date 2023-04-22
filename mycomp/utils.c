@@ -1,7 +1,3 @@
-//
-// Created by tessa on 4/21/2023.
-//
-
 #include <ctype.h>
 #include "utils.h"
 #include "complex.h"
@@ -37,7 +33,7 @@ int parse_double(char *str, double *num) {
     char *endptr;
     *num = strtod(str, &endptr);
     if (*endptr != '\0') {
-        // the input string contained invalid characters
+        /* the input string contained invalid characters */
         return 0;
     }
     return 1;

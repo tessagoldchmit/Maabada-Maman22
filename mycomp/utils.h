@@ -20,4 +20,4 @@ int check_number(char *str, int *i);
 
 int validate_comma(char *str, int *i);
 
-#endif //UTILS_H
+#endif
