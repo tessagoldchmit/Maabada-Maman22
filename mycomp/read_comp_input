@@ -1,11 +1,17 @@
 read_comp,
 read_comp ,
 read_comp A
-read_comp a
+read_comp T
 read_comp A,
+read_comp A ,   ,
+read_comp A, ,,
+read_compA
+read_comp,A,
+read_comp T,
 read_comp A, 1
-read_comp A, 1,,
-read_comp A, , 1, 2
+read_comp A, 1,
+read_comp A, 1,   ,
+read_comp A,    , 1, 2
 read_comp A, 1, 2
 read_comp A, 1, 2   ,
 read_comp A, 1, 2   ,
