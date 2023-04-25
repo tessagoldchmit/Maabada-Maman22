@@ -111,7 +111,12 @@ void abs_comp(complex z) {
 /**
  * Prints a message to the console indicating the program has stopped, then exits the program.
  */
-void stop(void) {
+void stop(complex **complex_pointers) {
+    int i;
     printf("Stopping program...\n");
+    for (i = 0; i < 6; i++) {
+        free(complex_pointers[i]);
+    }
+    free(complex_pointers);
     exit(0);
 }

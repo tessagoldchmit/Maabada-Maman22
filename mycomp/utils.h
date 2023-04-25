@@ -18,6 +18,8 @@ int ignore_whitespaces(char *str, int i);
 
 int check_number(char *str, int *i);
 
-int validate_comma(char *str, int *i);
+int validate_comma(const char *str, int *i);
+
+char* copy_string(const char* str);
 
 #endif

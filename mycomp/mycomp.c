@@ -1,6 +1,7 @@
 #include "complex.h"
 #include "utils.h"
 #include <ctype.h>
+#include <string.h>
 
 void parse_user_input(char *str, complex **complex_pointers);
 
@@ -20,18 +21,45 @@ void handle_mult_comp_comp(char *args[], complex **complex_pointers);
 
 void handle_abs_comp(char *args[], complex **complex_pointers);
 
-void handle_stop(char *args[]);
+void handle_stop(char *args[], complex **complex_pointers);
 
 int main() {
-    complex A = {0, 0};
-    complex B = {0, 0};
-    complex C = {0, 0};
-    complex D = {0, 0};
-    complex E = {0, 0};
-    complex F = {0, 0};
-    complex *complex_pointers[] = {&A, &B, &C, &D, &E, &F};
-
+    complex **complex_pointers;
     char input[100];
+    int i;
+
+    /* Allocate memory for the variables */
+    complex *A = (complex *) malloc(sizeof(complex));
+    complex *B = (complex *) malloc(sizeof(complex));
+    complex *C = (complex *) malloc(sizeof(complex));
+    complex *D = (complex *) malloc(sizeof(complex));
+    complex *E = (complex *) malloc(sizeof(complex));
+    complex *F = (complex *) malloc(sizeof(complex));
+
+    /* Initialize the variables */
+    A->real = 0;
+    A->imag = 0;
+    B->real = 0;
+    B->imag = 0;
+    C->real = 0;
+    C->imag = 0;
+    D->real = 0;
+    D->imag = 0;
+    E->real = 0;
+    E->imag = 0;
+    F->real = 0;
+    F->imag = 0;
+
+    /* Allocate memory for the pointers and initialize them with zeros */
+    complex_pointers = (complex **) calloc(6, sizeof(complex *));
+
+    /* Initialize the pointers */
+    complex_pointers[0] = A;
+    complex_pointers[1] = B;
+    complex_pointers[2] = C;
+    complex_pointers[3] = D;
+    complex_pointers[4] = E;
+    complex_pointers[5] = F;
 
     while (1) {
         printf("> ");
@@ -47,22 +75,31 @@ int main() {
         printf("\n");
     }
 
+    /* Free the memory */
+    for (i = 0; i < 6; i++) {
+        free(complex_pointers[i]);
+    }
+    free(complex_pointers);
+
     return 0;
 }
 
 void parse_user_input(char *str, complex **complex_pointers) {
-    char *copy = strdup(str);
+    char* copy = copy_string(str);
     char *p = strtok(copy, " \n\t\v\f");
+
     char *command = p;
     char *args = strtok(NULL, "");
 
     if (str[0] == '\0') {
         printf(ERR_EMPTY_COMMAND);
+        free(copy); /*  free the memory allocated by copy_string() */
         return;
     }
 
     if (command[strlen(command) - 1] == ',') {
         printf(ERR_ILLEGAL_COMMA);
+        free(copy); /*  free the memory allocated by copy_string() */
         return;
     }
 
@@ -83,11 +120,13 @@ void parse_user_input(char *str, complex **complex_pointers) {
     } else if (strcmp(command, "abs_comp") == 0) {
         handle_abs_comp(&args, complex_pointers);
     } else if (strcmp(command, "stop") == 0) {
-        handle_stop(&args);
+        handle_stop(&args, complex_pointers);
     } else {
         printf(ERR_UNDEFINED_COMMAND);
+        free(copy); /*  free the memory allocated by copy_string() */
         return;
     }
+    free(copy); /*  free the memory allocated by copy_string() */
 }
 
 /**
@@ -376,20 +415,22 @@ int validate_empty(const char *str) {
 
 void handle_read_comp(char *args[], complex **complex_pointers) {
     if (validate_string_letter_double_double(*args)) {
+        complex **ptr_to_complex;
         double real, imag;
         char *letter = strtok(*args, " ,");
         parse_double(strtok(NULL, " ,"), &real);
         parse_double(strtok(NULL, " ,"), &imag);
 
-        complex **ptr_to_complex = get_complex(letter, complex_pointers);
+        ptr_to_complex = get_complex(letter, complex_pointers);
         read_comp(*ptr_to_complex, real, imag);
     }
 }
 
 void handle_print_comp(char *args[], complex **complex_pointers) {
     if (validate_string_letter(*args)) {
+        complex **ptr_to_complex;
         char *letter = strtok(*args, " ");
-        complex **ptr_to_complex = get_complex(letter, complex_pointers);
+        ptr_to_complex = get_complex(letter, complex_pointers);
         print_comp(**ptr_to_complex);
     }
 }
@@ -418,22 +459,25 @@ void handle_sub_comp(char *args[], complex **complex_pointers) {
 
 void handle_mult_comp_real(char *args[], complex **complex_pointers) {
     if (validate_string_letter_double(*args)) {
+        complex **ptr_to_complex;
         double num;
         char *letter = strtok(*args, " ,");
         parse_double(strtok(NULL, " ,"), &num);
 
-        complex **ptr_to_complex = get_complex(letter, complex_pointers);
+        ptr_to_complex = get_complex(letter, complex_pointers);
         mult_comp_real(**ptr_to_complex, num);
     }
 }
 
 void handle_mult_comp_img(char *args[], complex **complex_pointers) {
     if (validate_string_letter_double(*args)) {
+        complex **ptr_to_complex;
+
         double num;
         char *letter = strtok(*args, " ,");
         parse_double(strtok(NULL, " ,"), &num);
 
-        complex **ptr_to_complex = get_complex(letter, complex_pointers);
+        ptr_to_complex = get_complex(letter, complex_pointers);
         mult_comp_img(**ptr_to_complex, num);
     }
 }
@@ -458,8 +502,8 @@ void handle_abs_comp(char *args[], complex **complex_pointers) {
     }
 }
 
-void handle_stop(char *args[]) {
+void handle_stop(char *args[], complex **complex_pointers) {
     if (validate_empty(*args)) {
-        stop();
+        stop(complex_pointers);
     }
 }

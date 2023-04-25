@@ -32,8 +32,7 @@ void mult_comp_comp(complex z1, complex z2);
 
 void abs_comp(complex z);
 
-void stop(void);
-
+void stop(complex **complex_pointers);
 
 /* Error messages */
 #define ERR_EMPTY_COMMAND "Error: empty command\n"
