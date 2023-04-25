@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-void parse_user_input(char *str, complex **complex_pointers);
+int parse_user_input(char *str, complex **complex_pointers);
 
 void handle_read_comp(char *args[], complex **complex_pointers);
 
@@ -28,32 +28,16 @@ int main() {
     char input[100];
     int i;
 
-    /* Allocate memory for the variables */
-    complex *A = (complex *) malloc(sizeof(complex));
-    complex *B = (complex *) malloc(sizeof(complex));
-    complex *C = (complex *) malloc(sizeof(complex));
-    complex *D = (complex *) malloc(sizeof(complex));
-    complex *E = (complex *) malloc(sizeof(complex));
-    complex *F = (complex *) malloc(sizeof(complex));
+/* Allocate memory for the variables and initialize them to zero */
+    complex *A = (complex *) calloc(1, sizeof(complex));
+    complex *B = (complex *) calloc(1, sizeof(complex));
+    complex *C = (complex *) calloc(1, sizeof(complex));
+    complex *D = (complex *) calloc(1, sizeof(complex));
+    complex *E = (complex *) calloc(1, sizeof(complex));
+    complex *F = (complex *) calloc(1, sizeof(complex));
 
-    /* Initialize the variables */
-    A->real = 0;
-    A->imag = 0;
-    B->real = 0;
-    B->imag = 0;
-    C->real = 0;
-    C->imag = 0;
-    D->real = 0;
-    D->imag = 0;
-    E->real = 0;
-    E->imag = 0;
-    F->real = 0;
-    F->imag = 0;
-
-    /* Allocate memory for the pointers and initialize them with zeros */
+/* Allocate memory for the pointers and initialize them with the variable addresses */
     complex_pointers = (complex **) calloc(6, sizeof(complex *));
-
-    /* Initialize the pointers */
     complex_pointers[0] = A;
     complex_pointers[1] = B;
     complex_pointers[2] = C;
@@ -70,7 +54,7 @@ int main() {
         /* Trim trailing newline character */
         input[strcspn(input, "\n")] = 0;
 
-        printf("> %s\n", input);
+        printf("%s\n", input);
         parse_user_input(input, complex_pointers);
         printf("\n");
     }
@@ -84,23 +68,22 @@ int main() {
     return 0;
 }
 
-void parse_user_input(char *str, complex **complex_pointers) {
-    char* copy = copy_string(str);
-    char *p = strtok(copy, " \n\t\v\f");
-
-    char *command = p;
+int parse_user_input(char *str, complex **complex_pointers) {
+    char *command = strtok(str, " \n\t\v\f");
     char *args = strtok(NULL, "");
+    char *valid_commands[NUM_COMMANDS] = VALID_COMMANDS;
+    int i;
 
-    if (str[0] == '\0') {
-        printf(ERR_EMPTY_COMMAND);
-        free(copy); /*  free the memory allocated by copy_string() */
-        return;
+    if (command == NULL || command[0] == '\0') {
+        HANDLE_ERROR(ERR_EMPTY_COMMAND);
     }
 
     if (command[strlen(command) - 1] == ',') {
-        printf(ERR_ILLEGAL_COMMA);
-        free(copy); /*  free the memory allocated by copy_string() */
-        return;
+        for (i = 0; i < NUM_COMMANDS; i++) {
+            if (strncmp(command, valid_commands[i], strlen(valid_commands[i]) - 1) == 0) {
+                HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
+            }
+        }
     }
 
     if (strcmp(command, "read_comp") == 0) {
@@ -122,11 +105,9 @@ void parse_user_input(char *str, complex **complex_pointers) {
     } else if (strcmp(command, "stop") == 0) {
         handle_stop(&args, complex_pointers);
     } else {
-        printf(ERR_UNDEFINED_COMMAND);
-        free(copy); /*  free the memory allocated by copy_string() */
-        return;
+        HANDLE_ERROR(ERR_UNDEFINED_COMMAND);
     }
-    free(copy); /*  free the memory allocated by copy_string() */
+    return 1;
 }
 
 /**

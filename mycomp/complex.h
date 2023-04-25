@@ -34,6 +34,11 @@ void abs_comp(complex z);
 
 void stop(complex **complex_pointers);
 
+#define NUM_COMMANDS 9
+
+#define VALID_COMMANDS {"read_comp", "print_comp", "add_comp", "sub_comp", "mult_comp_real", "mult_comp_img", "mult_comp_comp", "abs_comp", "stop"}
+
+
 /* Error messages */
 #define ERR_EMPTY_COMMAND "Error: empty command\n"
 #define ERR_MISSING_PARAMETER "Error: missing parameter\n"
@@ -44,6 +49,7 @@ void stop(complex **complex_pointers);
 #define ERR_MULTIPLE_CONSECUTIVE_COMMAS "Error: multiple consecutive commas\n"
 #define ERR_MISSING_COMMA "Error: missing comma\n"
 #define ERR_ILLEGAL_COMMA "Error: illegal comma\n"
+#define ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME "Error: illegal comma after the command name\n"
 
 
 #endif /* COMPLEX_H */
