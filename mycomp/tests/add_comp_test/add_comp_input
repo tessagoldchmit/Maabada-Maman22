@@ -1,0 +1,18 @@
+add_comp
+add_comp,
+add_comp ,
+Add_Comp A, B
+add_comp T
+add_comp A
+add_comp A,
+add_comp F, G
+add_comp F,, G
+add_comp F, C, H
+add_comp F, C,
+add_comp F, C
+add_comp F, 1
+add_comp -1.6
+add_comp A2, A3
+add_comp A2, A3
+add_comp A, A
+add_comp, A, A
