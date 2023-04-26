@@ -35,14 +35,16 @@ void abs_comp(complex z);
 void stop(complex **complex_pointers);
 
 #define NUM_COMMANDS 9
-
 #define VALID_COMMANDS {"read_comp", "print_comp", "add_comp", "sub_comp", "mult_comp_real", "mult_comp_img", "mult_comp_comp", "abs_comp", "stop"}
 
 
 /* Error messages */
 #define ERR_EMPTY_COMMAND "Error: empty command\n"
 #define ERR_MISSING_PARAMETER "Error: missing parameter\n"
+#define ERR_ALL_PARAMETERS_MISSING "Error: all parameters are missing\n"
 #define ERR_INVALID_PARAMETER "Error: invalid parameter - not a number\n"
+#define ERR_INVALID_REAL_PARAMETER "Error: invalid parameter for real part - not a number\n"
+#define ERR_INVALID_IMAGINARY_PARAMETER "Error: invalid parameter for imaginary part - not a number\n"
 #define ERR_UNDEFINED_COMPLEX_VAR "Error: undefined complex variable\n"
 #define ERR_UNDEFINED_COMMAND "Error: undefined command name\n"
 #define ERR_EXTRANEOUS_TEXT "Error: extraneous text after end of command\n"
@@ -50,6 +52,5 @@ void stop(complex **complex_pointers);
 #define ERR_MISSING_COMMA "Error: missing comma\n"
 #define ERR_ILLEGAL_COMMA "Error: illegal comma\n"
 #define ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME "Error: illegal comma after the command name\n"
-
 
 #endif /* COMPLEX_H */

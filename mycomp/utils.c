@@ -23,23 +23,6 @@ complex **get_complex(char *var_name, complex **complex_pointers) {
 
 
 /**
- * Converts a string to a double, if possible.
- *
- * @param str the string to convert to a double
- * @param num a pointer to where the resulting double should be stored
- * @return 1 if the string was successfully converted to a double, or 0 otherwise
- */
-int parse_double(char *str, double *num) {
-    char *endptr;
-    *num = strtod(str, &endptr);
-    if (*endptr != '\0') {
-        /* the input string contained invalid characters */
-        return 0;
-    }
-    return 1;
-}
-
-/**
  * Skips over whitespace characters in a given string starting from a given index.
  *
  * @param str: a pointer to the input string to process.
@@ -65,7 +48,7 @@ int ignore_whitespaces(char *str, int i) {
  * Returns:
  * int: 1 if the string represents a valid number, 0 otherwise.
  */
-int check_number(char *str, int *i) {
+int is_number(char *str, int *i) {
     int dot_count = 0;
 
     if (!isdigit(str[*i]) && str[*i] != '-' && str[*i] != '+') {
@@ -93,30 +76,11 @@ int check_number(char *str, int *i) {
  * @param i a pointer to the current position in the string
  * @return 1 if a comma is present, 0 otherwise
  */
-int validate_comma(const char *str, int *i) {
+int is_comma(const char *str, int *i) {
     if (str[*i] == ',') {
         (*i)++;
         return 1;
     } else {
         return 0;
     }
-}
-
-/**
- * Creates a new copy of a given string.
- *
- * This function allocates memory for a new string that is an exact copy of the
- * input string.
- *
- * @param str The string to copy.
- * @return A new copy of the input string, or NULL if memory allocation fails.
- */
-char* copy_string(const char* str)
-{
-    size_t len = strlen(str);
-    char* copy = malloc(len + 1);
-    if (copy != NULL) {
-        strcpy(copy, str);
-    }
-    return copy;
 }

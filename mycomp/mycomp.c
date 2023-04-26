@@ -118,11 +118,10 @@ int parse_user_input(char *str, complex **complex_pointers) {
  * @return Returns 1 if the string is valid, otherwise 0.
  */
 int validate_string_letter_double_double(char *str) {
-    int i = 0;
-    int letter_count = 0, comma_count = 0;
+    int i = 0, j;
 
     if (!str) {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_ALL_PARAMETERS_MISSING);
     }
 
     i = ignore_whitespaces(str, i);
@@ -133,64 +132,49 @@ int validate_string_letter_double_double(char *str) {
         if (letter < 'A' || letter > 'F') {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
-        letter_count++;
-    } else if (validate_comma(str, &i)) {
-        HANDLE_ERROR(ERR_ILLEGAL_COMMA);
+    } else if (is_comma(str, &i)) {
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
     i++;
-
     i = ignore_whitespaces(str, i);
 
     /* check for comma after letter */
-    if (!validate_comma(str, &i)) {
+    if (!is_comma(str, &i))
         HANDLE_ERROR(ERR_MISSING_COMMA);
-    }
-    comma_count++;
-
     i = ignore_whitespaces(str, i);
 
     /* check for first number */
-    if (!check_number(str, &i)) {
-        HANDLE_ERROR(ERR_INVALID_PARAMETER);
-    }
-
+    if (i > strlen(str) - 1)
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+    if (is_comma(str, &i))
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
+    else if (!is_number(str, &i))
+        HANDLE_ERROR(ERR_INVALID_REAL_PARAMETER);
     i = ignore_whitespaces(str, i);
 
     /* check for comma after first number */
-    if (!validate_comma(str, &i)) {
+    if (!is_comma(str, &i))
         HANDLE_ERROR(ERR_MISSING_COMMA);
-    }
-    comma_count++;
-
     i = ignore_whitespaces(str, i);
 
     /* check for second number */
-    if (!check_number(str, &i)) {
-        HANDLE_ERROR(ERR_INVALID_PARAMETER);
-    }
-
-    i = ignore_whitespaces(str, i);
-
-    /* check for illegal comma */
-    if (str[i] == ',') {
-        HANDLE_ERROR(ERR_ILLEGAL_COMMA);
-    }
-
-    i = ignore_whitespaces(str, i);
-
-    /* check for extraneous text after end of command */
-    if (str[i])
-        HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
-
-    /* check for missing parameter or multiple consecutive commas */
-    if (letter_count == 0 || comma_count < 2) {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
-    } else if (comma_count > 2) {
+    if (is_comma(str, &i))
         HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
-    }
+    else if (!is_number(str, &i))
+        HANDLE_ERROR(ERR_INVALID_IMAGINARY_PARAMETER);
+    if (i != strlen(str)) {
+        j = i;
+        i = ignore_whitespaces(str, i);
 
+        if (i == j)
+            HANDLE_ERROR(ERR_INVALID_IMAGINARY_PARAMETER);
+
+        /* check for extraneous text after end of command */
+        if (str[i])
+            HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
+    }
     return 1;
 }
 
@@ -239,7 +223,6 @@ int validate_string_letter(char *str) {
  */
 int validate_string_letter_letter(char *str) {
     int i = 0;
-    int letter_count = 0, comma_count = 0;
 
     if (!str) {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
@@ -253,9 +236,8 @@ int validate_string_letter_letter(char *str) {
         if (letter < 'A' || letter > 'F') {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
-        letter_count++;
-    } else if (validate_comma(str, &i)) {
-        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
+    } else if (is_comma(str, &i)) {
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
     }
@@ -264,12 +246,14 @@ int validate_string_letter_letter(char *str) {
     i = ignore_whitespaces(str, i);
 
     /* check for comma after first letter */
-    if (!validate_comma(str, &i)) {
+    if (!is_comma(str, &i))
         HANDLE_ERROR(ERR_MISSING_COMMA);
-    }
-    comma_count++;
 
     i = ignore_whitespaces(str, i);
+
+    /* check for consecutive commas*/
+    if (!is_comma(str, &i))
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
 
     /* check for second A-F letter */
     if (isalpha(str[i])) {
@@ -277,8 +261,7 @@ int validate_string_letter_letter(char *str) {
         if (letter < 'A' || letter > 'F') {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
-        letter_count++;
-    } else if (validate_comma(str, &i)) {
+    } else if (is_comma(str, &i)) {
         HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
@@ -297,13 +280,6 @@ int validate_string_letter_letter(char *str) {
     /* check for extraneous text after end of command */
     if (str[i])
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
-
-    /* check for missing parameter or multiple consecutive commas */
-    if (letter_count < 2 || comma_count < 1) {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
-    } else if (comma_count > 1) {
-        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
-    }
 
     return 1;
 }
@@ -333,7 +309,7 @@ int validate_string_letter_double(char *str) {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
         letter_count++;
-    } else if (validate_comma(str, &i)) {
+    } else if (is_comma(str, &i)) {
         HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     } else {
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
@@ -343,7 +319,7 @@ int validate_string_letter_double(char *str) {
     i = ignore_whitespaces(str, i);
 
     /* check for comma after letter */
-    if (!validate_comma(str, &i)) {
+    if (!is_comma(str, &i)) {
         HANDLE_ERROR(ERR_MISSING_COMMA);
     }
     comma_count++;
@@ -351,7 +327,7 @@ int validate_string_letter_double(char *str) {
     i = ignore_whitespaces(str, i);
 
     /* check for number after comma */
-    if (!check_number(str, &i)) {
+    if (!is_number(str, &i)) {
         HANDLE_ERROR(ERR_INVALID_PARAMETER);
     }
 
@@ -399,11 +375,13 @@ void handle_read_comp(char *args[], complex **complex_pointers) {
         complex **ptr_to_complex;
         double real, imag;
         char *letter = strtok(*args, " ,");
-        parse_double(strtok(NULL, " ,"), &real);
-        parse_double(strtok(NULL, " ,"), &imag);
+        char *endptr;
+        real = strtod(strtok(NULL, " ,"), &endptr);
+        imag = strtod(strtok(NULL, " ,"), &endptr);
 
         ptr_to_complex = get_complex(letter, complex_pointers);
         read_comp(*ptr_to_complex, real, imag);
+        LOG_INFO("read_comp");
     }
 }
 
@@ -413,6 +391,7 @@ void handle_print_comp(char *args[], complex **complex_pointers) {
         char *letter = strtok(*args, " ");
         ptr_to_complex = get_complex(letter, complex_pointers);
         print_comp(**ptr_to_complex);
+        LOG_INFO("print_comp");
     }
 }
 
@@ -424,6 +403,7 @@ void handle_add_comp(char *args[], complex **complex_pointers) {
         complex **ptr_to_complex1 = get_complex(letter1, complex_pointers);
         complex **ptr_to_complex2 = get_complex(letter2, complex_pointers);
         add_comp(**ptr_to_complex1, **ptr_to_complex2);
+        LOG_INFO("add_comp");
     }
 }
 
@@ -435,6 +415,7 @@ void handle_sub_comp(char *args[], complex **complex_pointers) {
         complex **ptr_to_complex1 = get_complex(letter1, complex_pointers);
         complex **ptr_to_complex2 = get_complex(letter2, complex_pointers);
         sub_comp(**ptr_to_complex1, **ptr_to_complex2);
+        LOG_INFO("sub_comp");
     }
 }
 
@@ -443,10 +424,12 @@ void handle_mult_comp_real(char *args[], complex **complex_pointers) {
         complex **ptr_to_complex;
         double num;
         char *letter = strtok(*args, " ,");
-        parse_double(strtok(NULL, " ,"), &num);
+        char *endptr;
+        num = strtod(strtok(NULL, " ,"), &endptr);
 
         ptr_to_complex = get_complex(letter, complex_pointers);
         mult_comp_real(**ptr_to_complex, num);
+        LOG_INFO("mult_comp_real");
     }
 }
 
@@ -456,10 +439,12 @@ void handle_mult_comp_img(char *args[], complex **complex_pointers) {
 
         double num;
         char *letter = strtok(*args, " ,");
-        parse_double(strtok(NULL, " ,"), &num);
+        char *endptr;
+        num = strtod(strtok(NULL, " ,"), &endptr);
 
         ptr_to_complex = get_complex(letter, complex_pointers);
         mult_comp_img(**ptr_to_complex, num);
+        LOG_INFO("mult_comp_img");
     }
 }
 
@@ -472,6 +457,7 @@ void handle_mult_comp_comp(char *args[], complex **complex_pointers) {
         complex **ptr_to_complex1 = get_complex(letter1, complex_pointers);
         complex **ptr_to_complex2 = get_complex(letter2, complex_pointers);
         mult_comp_comp(**ptr_to_complex1, **ptr_to_complex2);
+        LOG_INFO("mult_comp_comp");
     }
 }
 
@@ -480,6 +466,7 @@ void handle_abs_comp(char *args[], complex **complex_pointers) {
         char *letter = strtok(*args, " ");
         complex **ptr_to_complex = get_complex(letter, complex_pointers);
         abs_comp(**ptr_to_complex);
+        LOG_INFO("abs_comp");
     }
 }
 

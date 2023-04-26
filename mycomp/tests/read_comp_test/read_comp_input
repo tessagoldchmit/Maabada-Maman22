@@ -9,12 +9,11 @@ read_compA
 read_comp,A,
 read_comp T,
 read_comp A, 1
+read_comp A, 1s
 read_comp A, 1,
 read_comp A, 1,   ,
 read_comp A,    , 1, 2
 read_comp A, 1, 2
 read_comp A, 1, 2   ,
-read_comp A, 1, 2   ,
 read_comp A, 1, 2 ,  ,
-read_comp A, 1, 2 , as
 read_comp A, 1, 2 as
