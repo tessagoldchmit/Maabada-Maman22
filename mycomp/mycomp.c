@@ -135,7 +135,7 @@ int validate_string_letter_double_double(char *str) {
     } else if (is_comma(str, &i)) {
         HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
     i++;
     i = ignore_whitespaces(str, i);
@@ -203,12 +203,12 @@ int validate_string_letter(char *str) {
         if (letter < 'A' || letter > 'F') {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
+    } else if (is_comma(str, &i)) {
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
         HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
-    i++;
-
-    i = ignore_whitespaces(str, i);
+    i = ignore_whitespaces(str, ++i);
 
     /* check for extraneous text after end of command */
     if (str[i])
@@ -303,7 +303,7 @@ int validate_string_letter_double(char *str) {
     } else if (is_comma(str, &i)) {
         HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
     } else {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
     i++;
 
