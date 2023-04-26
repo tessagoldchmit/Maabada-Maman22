@@ -1,1 +1,21 @@
+read_comp,
+read_comp ,
 read_comp A
+read_comp T
+read_comp A,
+read_comp A ,   ,
+read_comp A, ,,
+read_compA
+read_comp,A,
+read_comp T,
+read_comp A, 1
+read_comp A, 1s
+read_comp A, 1, 2da
+read_comp A, 1
+read_comp A, 1,
+read_comp A, 1,   ,
+read_comp A,    , 1, 2
+read_comp A, 1.4, -2.7
+read_comp A, 1, 2   ,
+read_comp A, -1.2, 2.c
+read_comp A, 1, 2 asd
