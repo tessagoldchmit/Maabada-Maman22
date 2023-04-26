@@ -1,0 +1,64 @@
+> read_comp,
+Error: undefined command name
+
+> read_comp ,
+Error: illegal comma after the command name
+
+> read_comp A
+Error: missing comma
+
+> read_comp T
+Error: undefined complex variable
+
+> read_comp A,
+Error: missing parameter
+
+> read_comp A ,   ,
+Error: multiple consecutive commas
+
+> read_comp A, ,,
+Error: multiple consecutive commas
+
+> read_compA
+Error: undefined command name
+
+> read_comp,A,
+Error: undefined command name
+
+> read_comp T,
+Error: undefined complex variable
+
+> read_comp A, 1
+Error: missing comma
+
+> read_comp A, 1s
+Error: invalid parameter for real part - not a number
+
+> read_comp A, 1, 2da
+Error: invalid parameter for imaginary part - not a number
+
+> read_comp A, 1
+Error: missing comma
+
+> read_comp A, 1,
+Error: invalid parameter for imaginary part - not a number
+
+> read_comp A, 1,   ,
+Error: multiple consecutive commas
+
+> read_comp A,    , 1, 2
+Error: multiple consecutive commas
+
+> read_comp A, 1.4, -2.7
+Info: The function read_comp has completed successfully
+
+> read_comp A, 1, 2   ,
+Error: extraneous text after end of command
+
+> read_comp A, -1.2, 2.c
+Error: invalid parameter for imaginary part - not a number
+
+> read_comp A, 1, 2 asd
+Error: extraneous text after end of command
+
+> 
