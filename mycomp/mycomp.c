@@ -171,6 +171,9 @@ int validate_string_letter_double_double(char *str) {
         j = i;
         i = ignore_whitespaces(str, i);
 
+        if (str[i]==',')
+            HANDLE_ERROR(ERR_ILLEGAL_COMMA);
+
         if (i == j)
             HANDLE_ERROR(ERR_INVALID_IMAGINARY_PARAMETER);
 

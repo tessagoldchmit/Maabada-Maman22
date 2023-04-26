@@ -5,7 +5,6 @@ read_comp A,
 read_comp A ,   ,
 read_comp A, ,,
 read_compA
-read_comp,A,
 read_comp T,
 read_comp A, 1
 read_comp A, 1s

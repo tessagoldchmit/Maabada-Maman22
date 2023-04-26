@@ -17,7 +17,7 @@ Error: invalid parameter for imaginary part - not a number
 Error: missing comma
 
 > read_comp A, 3.5, -3,
-Error: invalid parameter for imaginary part - not a number
+Error: illegal comma
 
 > add_comp B
 Error: missing comma

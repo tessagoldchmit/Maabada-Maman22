@@ -1,8 +1,11 @@
 > Stop
 Error: undefined command name
 
-> stop,
-Error: undefined command name
+> stop ,,
+Error: extraneous text after end of command
+
+> stop ,
+Error: extraneous text after end of command
 
 > stop please
 Error: extraneous text after end of command

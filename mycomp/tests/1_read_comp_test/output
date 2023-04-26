@@ -19,9 +19,6 @@ Error: multiple consecutive commas
 > read_compA
 Error: undefined command name
 
-> read_comp,A,
-Error: undefined command name
-
 > read_comp T,
 Error: undefined complex variable
 
