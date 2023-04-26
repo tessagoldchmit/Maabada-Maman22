@@ -227,58 +227,46 @@ int validate_string_letter(char *str) {
 int validate_string_letter_letter(char *str) {
     int i = 0;
 
-    if (!str) {
+    if (!str)
         HANDLE_ERROR(ERR_MISSING_PARAMETER);
-    }
-
     i = ignore_whitespaces(str, i);
 
-    /* check for first A-F letter */
+    /* check for A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
-        if (letter < 'A' || letter > 'F') {
+        if (letter < 'A' || letter > 'F')
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
-        }
     } else if (is_comma(str, &i)) {
         HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
-    i++;
+    i = ignore_whitespaces(str, ++i);
 
+    /* check for comma after letter */
+    if (!is_comma(str, &i)) {
+        if (i == strlen(str))
+            HANDLE_ERROR(ERR_MISSING_COMMA);
+        HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
+    }
     i = ignore_whitespaces(str, i);
 
-    /* check for comma after first letter */
-    if (!is_comma(str, &i))
-        HANDLE_ERROR(ERR_MISSING_COMMA);
-
-    i = ignore_whitespaces(str, i);
-
-    /* check for consecutive commas*/
-    if (!is_comma(str, &i))
+    if (i > strlen(str) - 1)
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+    if (is_comma(str, &i))
         HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
 
-    /* check for second A-F letter */
+    /* check for A-F letter */
     if (isalpha(str[i])) {
         char letter = str[i];
-        if (letter < 'A' || letter > 'F') {
+        if (letter < 'A' || letter > 'F')
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
-        }
     } else if (is_comma(str, &i)) {
-        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
-    i++;
-
-    i = ignore_whitespaces(str, i);
-
-    /* check for illegal comma */
-    if (str[i] == ',') {
-        HANDLE_ERROR(ERR_ILLEGAL_COMMA);
-    }
-
-    i = ignore_whitespaces(str, i);
+    i = ignore_whitespaces(str, ++i);
 
     /* check for extraneous text after end of command */
     if (str[i])
