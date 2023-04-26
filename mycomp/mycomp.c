@@ -48,6 +48,7 @@ int main() {
     while (1) {
         printf("> ");
         if (!fgets(input, sizeof(input), stdin)) {
+            printf("EOF was detected (which is illegal), stopping the program.\n");
             break;  /* End of file or error occurred */
         }
 
