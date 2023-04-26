@@ -155,8 +155,11 @@ int validate_string_letter_double_double(char *str) {
     i = ignore_whitespaces(str, i);
 
     /* check for comma after first number */
-    if (!is_comma(str, &i))
-        HANDLE_ERROR(ERR_MISSING_COMMA);
+    if (!is_comma(str, &i)) {
+        if (i == strlen(str))
+            HANDLE_ERROR(ERR_MISSING_COMMA);
+        HANDLE_ERROR(ERR_INVALID_REAL_PARAMETER);
+    }
     i = ignore_whitespaces(str, i);
 
     /* check for second number */
