@@ -192,7 +192,7 @@ int validate_string_letter(char *str) {
     int i = 0;
 
     if (!str) {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_ALL_PARAMETERS_MISSING);
     }
 
     i = ignore_whitespaces(str, i);
@@ -228,7 +228,7 @@ int validate_string_letter_letter(char *str) {
     int i = 0;
 
     if (!str)
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_ALL_PARAMETERS_MISSING);
     i = ignore_whitespaces(str, i);
 
     /* check for A-F letter */
@@ -288,7 +288,7 @@ int validate_string_letter_double(char *str) {
     int letter_count = 0, comma_count = 0;
 
     if (!str) {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+        HANDLE_ERROR(ERR_ALL_PARAMETERS_MISSING);
     }
 
     i = ignore_whitespaces(str, i);
