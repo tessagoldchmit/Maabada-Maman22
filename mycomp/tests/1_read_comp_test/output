@@ -1,6 +1,3 @@
-> read_comp,
-Error: undefined command name
-
 > read_comp ,
 Error: illegal comma after the command name
 

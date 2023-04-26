@@ -1,0 +1,14 @@
+> Stop
+Error: undefined command name
+
+> stop,
+Error: undefined command name
+
+> stop please
+Error: extraneous text after end of command
+
+> please stop
+Error: undefined command name
+
+> stop
+Stopping program...

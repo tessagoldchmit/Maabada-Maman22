@@ -1,0 +1,83 @@
+> print_comp A
+0.00 + (0.00)i
+Info: The function print_comp has completed successfully
+
+> print_comp B
+0.00 + (0.00)i
+Info: The function print_comp has completed successfully
+
+> print_comp C
+0.00 + (0.00)i
+Info: The function print_comp has completed successfully
+
+> read_comp A, 45.1, -23.75
+Info: The function read_comp has completed successfully
+
+> print_comp A
+45.10 + (-23.75)i
+Info: The function print_comp has completed successfully
+
+> read_comp B, 54.2, 3.56
+Info: The function read_comp has completed successfully
+
+> print_comp B
+54.20 + (3.56)i
+Info: The function print_comp has completed successfully
+
+> read_comp C, 0, -1
+Info: The function read_comp has completed successfully
+
+> print_comp C
+0.00 + (-1.00)i
+Info: The function print_comp has completed successfully
+
+> add_comp A, B
+99.30 + (-20.19)i
+Info: The function add_comp has completed successfully
+
+> sub_comp C, A
+-45.10 + (22.75)i
+Info: The function sub_comp has completed successfully
+
+> sub_comp B, B
+0.00 + (0.00)i
+Info: The function sub_comp has completed successfully
+
+> sub_comp D, A
+-45.10 + (23.75)i
+Info: The function sub_comp has completed successfully
+
+> mult_comp_real A, 2.51
+113.20 + (-59.61)i
+Info: The function mult_comp_real has completed successfully
+
+> mult_comp_img A, -2.564
+-60.90 + (-115.64)i
+Info: The function mult_comp_img has completed successfully
+
+> mult_comp_comp A, B
+2528.97 + (-1126.69)i
+Info: The function mult_comp_comp has completed successfully
+
+> mult_comp_comp  E,   C
+0.00 + (0.00)i
+Info: The function mult_comp_comp has completed successfully
+
+> abs_comp A
+50.97
+Info: The function abs_comp has completed successfully
+
+> abs_comp B
+54.32
+Info: The function abs_comp has completed successfully
+
+> abs_comp C
+1.00
+Info: The function abs_comp has completed successfully
+
+> abs_comp F
+0.00
+Info: The function abs_comp has completed successfully
+
+> stop
+Stopping program...

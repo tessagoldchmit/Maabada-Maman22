@@ -1,0 +1,10 @@
+sub_comp 
+sub_comp ,
+Sub_comp
+sub_comp A, 1
+sub_comp A,,   A
+sub_comp   A  ,A  ,
+sub_comp A,
+sub_comp A,D
+sub_comp 1
+sub_comp -A

@@ -1,0 +1,26 @@
+> print_comp
+Error: all parameters are missing
+
+> print_comp,
+Error: illegal comma after the command name
+
+> PrintComp A
+Error: undefined command name
+
+> print_comp A,
+Error: extraneous text after end of command
+
+> print_comp A
+0.00 + (0.00)i
+Info: The function print_comp has completed successfully
+
+> print_comp ,A
+Error: illegal comma after the command name
+
+> print_comp a
+Error: undefined complex variable
+
+> print_comp abc
+Error: undefined complex variable
+
+> 

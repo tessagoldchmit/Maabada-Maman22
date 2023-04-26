@@ -1,0 +1,35 @@
+> mult_comp_img
+Error: all parameters are missing
+
+> mult_comp_imgggg
+Error: undefined command name
+
+> mult_comp_img .
+Error: undefined complex variable
+
+> mult_comp_img ,
+Error: illegal comma after the command name
+
+> mult_comp_img A, B, C
+Error: invalid parameter - not a number
+
+> mult_comp_img A, -8, 10
+Error: extraneous text after end of command
+
+> mult_comp_img  F , ,
+Error: multiple consecutive commas
+
+> mult_comp_img   F,
+Error: missing parameter
+
+> mult_comp_img 1, 2, 3
+Error: undefined complex variable
+
+> mult_comp_img D, 4
+-0.00 + (0.00)i
+Info: The function mult_comp_img has completed successfully
+
+> mult_comp_img D, D
+Error: invalid parameter - not a number
+
+> 

@@ -1,0 +1,29 @@
+> mult_comp_real
+Error: all parameters are missing
+
+> Mult_comp_real
+Error: undefined command name
+
+> mult_comp_real ,
+Error: illegal comma after the command name
+
+> mult_comp_real F
+Error: missing comma
+
+> mult_comp_real 	E ,
+Error: missing parameter
+
+> mult_comp_real E, B
+Error: invalid parameter - not a number
+
+> mult_comp_real G, 3
+Error: undefined complex variable
+
+> mult_comp_real F, 3
+0.00 + (0.00)i
+Info: The function mult_comp_real has completed successfully
+
+> mult_comp_real F, 3, 1
+Error: extraneous text after end of command
+
+> 

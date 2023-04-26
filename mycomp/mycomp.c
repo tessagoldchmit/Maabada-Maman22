@@ -156,7 +156,7 @@ int validate_string_letter_double_double(char *str) {
 
     /* check for comma after first number */
     if (!is_comma(str, &i)) {
-        if (i == strlen(str))
+        if (i >= strlen(str) - 1)
             HANDLE_ERROR(ERR_MISSING_COMMA);
         HANDLE_ERROR(ERR_INVALID_REAL_PARAMETER);
     }
@@ -245,7 +245,7 @@ int validate_string_letter_letter(char *str) {
 
     /* check for comma after letter */
     if (!is_comma(str, &i)) {
-        if (i == strlen(str))
+        if (i >= strlen(str) - 1)
             HANDLE_ERROR(ERR_MISSING_COMMA);
         HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
@@ -285,12 +285,9 @@ int validate_string_letter_letter(char *str) {
  */
 int validate_string_letter_double(char *str) {
     int i = 0;
-    int letter_count = 0, comma_count = 0;
 
-    if (!str) {
+    if (!str)
         HANDLE_ERROR(ERR_ALL_PARAMETERS_MISSING);
-    }
-
     i = ignore_whitespaces(str, i);
 
     /* check for A-F letter */
@@ -299,48 +296,31 @@ int validate_string_letter_double(char *str) {
         if (letter < 'A' || letter > 'F') {
             HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
         }
-        letter_count++;
     } else if (is_comma(str, &i)) {
-        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
+        HANDLE_ERROR(ERR_ILLEGAL_COMMA_AFTER_COMMAND_NAME);
     } else {
         HANDLE_ERROR(ERR_UNDEFINED_COMPLEX_VAR);
     }
     i++;
-
     i = ignore_whitespaces(str, i);
 
     /* check for comma after letter */
-    if (!is_comma(str, &i)) {
+    if (!is_comma(str, &i))
         HANDLE_ERROR(ERR_MISSING_COMMA);
-    }
-    comma_count++;
-
     i = ignore_whitespaces(str, i);
 
-    /* check for number after comma */
-    if (!is_number(str, &i)) {
+    /* check for first number */
+    if (i > strlen(str) - 1)
+        HANDLE_ERROR(ERR_MISSING_PARAMETER);
+    if (is_comma(str, &i))
+        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
+    else if (!is_number(str, &i))
         HANDLE_ERROR(ERR_INVALID_PARAMETER);
-    }
-
-    i = ignore_whitespaces(str, i);
-
-    /* check for illegal comma */
-    if (str[i] == ',') {
-        HANDLE_ERROR(ERR_ILLEGAL_COMMA);
-    }
-
     i = ignore_whitespaces(str, i);
 
     /* check for extraneous text after end of command */
     if (str[i])
         HANDLE_ERROR(ERR_EXTRANEOUS_TEXT);
-
-    /* check for missing parameter or multiple consecutive commas */
-    if (letter_count == 0 || comma_count == 0) {
-        HANDLE_ERROR(ERR_MISSING_PARAMETER);
-    } else if (comma_count > 1) {
-        HANDLE_ERROR(ERR_MULTIPLE_CONSECUTIVE_COMMAS);
-    }
 
     return 1;
 }

@@ -1,0 +1,32 @@
+> sub_comp 
+Error: all parameters are missing
+
+> sub_comp ,
+Error: illegal comma after the command name
+
+> Sub_comp
+Error: undefined command name
+
+> sub_comp A, 1
+Error: undefined complex variable
+
+> sub_comp A,,   A
+Error: multiple consecutive commas
+
+> sub_comp   A  ,A  ,
+Error: extraneous text after end of command
+
+> sub_comp A,
+Error: missing parameter
+
+> sub_comp A,D
+0.00 + (0.00)i
+Info: The function sub_comp has completed successfully
+
+> sub_comp 1
+Error: undefined complex variable
+
+> sub_comp -A
+Error: undefined complex variable
+
+> 

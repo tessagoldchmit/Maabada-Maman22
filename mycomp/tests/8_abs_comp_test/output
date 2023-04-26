@@ -1,0 +1,35 @@
+> abs_comp
+Error: all parameters are missing
+
+> Abs_comp
+Error: undefined command name
+
+> abs_comp    ,
+Error: illegal comma after the command name
+
+> abs_comp , , A
+Error: illegal comma after the command name
+
+> abs_comp 2.5
+Error: undefined complex variable
+
+> abs_comp T
+Error: undefined complex variable
+
+> abs_comp A1
+Error: extraneous text after end of command
+
+> abs_comp   AAA
+Error: extraneous text after end of command
+
+> abs_comp    A
+0.00
+Info: The function abs_comp has completed successfully
+
+> abs_comp    A , 
+Error: extraneous text after end of command
+
+>   abs_comp A, B
+Error: extraneous text after end of command
+
+> 

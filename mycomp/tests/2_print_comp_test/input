@@ -1,9 +1,8 @@
+print_comp
 print_comp,
-print_comp ,
+PrintComp A
 print_comp A,
 print_comp A
 print_comp ,A
-print_comp ,A,
 print_comp a
-print_comp a,
-print_comp ,a,
+print_comp abc
