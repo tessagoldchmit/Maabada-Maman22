@@ -45,6 +45,8 @@ int main() {
     complex_pointers[4] = E;
     complex_pointers[5] = F;
 
+    printf(HELP_TEXT_PART1);
+    printf(HELP_TEXT_PART2);
     while (1) {
         printf("> ");
         if (!fgets(input, sizeof(input), stdin)) {
