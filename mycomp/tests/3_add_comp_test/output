@@ -1,3 +1,24 @@
+Enter one of the following commands in a valid format:
+
+* read_comp {complex_var}, {real_part}, {imaginary_part}
+	Reads values into a complex variable.
+* print_comp {complex_var}
+	Prints a complex variable.
+* add_comp {complex_var}, {complex_var}
+	Prints the result of adding two complex variables.
+* sub_comp {complex_var}, {complex_var}
+	Prints the result of subtracting two complex variables.
+* mult_comp_real {complex_var}, {real}
+	Prints the result of the mult of a complex with a real number.
+* mult_comp_img {complex_var}, {imaginary}
+	Prints the result of the mult of a complex with an imaginary number.
+* mult_comp_comp {complex_var}, {complex_var}
+	Prints the result of the mult of 2 complex numbers.
+* abs_comp {complex_var}
+	Prints the absolute value of a complex variable.
+* stop
+	Stops the program.
+
 > add_comp
 Error: all parameters are missing
 
@@ -38,4 +59,4 @@ Error: undefined complex variable
 > add_comp -1.6
 Error: undefined complex variable
 
-> 
+> EOF was detected (which is illegal), stopping the program.
